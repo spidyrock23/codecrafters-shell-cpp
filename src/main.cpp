@@ -15,7 +15,7 @@ int main()
     std::string command;
     std::getline(std::cin, command);
     if(command=="exit"){
-      std::exit(EXIT_FAILURE);
+      std::exit(0);
     }
     std::cout << command << ": command not found" << std::endl;
   }
