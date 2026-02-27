@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-#include<cstdlib>
+#include <cstdlib>
 using namespace std;
 int main()
 {
@@ -14,8 +14,13 @@ int main()
     std::cout << "$ ";
     std::string command;
     std::getline(std::cin, command);
-    if(command=="exit"){
+    if (command == "exit")
+    {
       std::exit(0);
+    }
+    if (command.substr(0, 5) == "echo ")
+    {
+      std::cout << command.substr(5) << std::endl;
     }
     std::cout << command << ": command not found" << std::endl;
   }
