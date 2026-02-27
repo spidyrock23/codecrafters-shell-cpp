@@ -11,20 +11,29 @@ int main()
   // TODO: Uncomment the code below to pass the first stage
   while (true)
   {
-    std::cout << "$ ";
-    std::string command;
-    std::getline(std::cin, command);
+    cout << "$ ";
+    string command;
+    getline(std::cin, command);
     if (command == "exit")
     {
-      std::exit(0);
+      exit(0);
     }
     if (command.substr(0, 5) == "echo ")
     {
-      std::cout << command.substr(5) << std::endl;
+      cout << command.substr(5) << std::endl;
+    }
+    else if (command.substr(0, 5) == "type "){
+      string s = command.substr(5);
+      if(s == "echo" && s=="exit" && s=="type"){
+        cout << command.substr(5) << " is a shell builtin" << endl;
+      }
+      else{
+        cout << command << ": command not found" << endl;
+      }
     }
     else
     {
-      std::cout << command << ": command not found" << std::endl;
+      cout << command << ": command not found" << endl;
     }
   }
 }
