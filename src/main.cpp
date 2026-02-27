@@ -28,7 +28,7 @@ int main()
         cout << command.substr(5) << " is a shell builtin" << endl;
       }
       else{
-        cout << command << ": command not found" << endl;
+        cout << command.substr(5) << ": command not found" << endl;
       }
     }
     else
