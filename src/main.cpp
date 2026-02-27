@@ -24,7 +24,7 @@ int main()
     }
     else if (command.substr(0, 5) == "type "){
       string s = command.substr(5);
-      if(s == "echo" && s=="exit" && s=="type"){
+      if(s == "echo" || s=="exit" || s=="type"){
         cout << command.substr(5) << " is a shell builtin" << endl;
       }
       else{
