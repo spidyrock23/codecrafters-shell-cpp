@@ -93,7 +93,7 @@ int main()
         current_path = input[1];
       }
       else{
-        cout << "cd: " << input[1] << ": No such file or directory exists" << endl;
+        cout << "cd: " << input[1] << ": No such file or directory" << endl;
       }
     }
     else if(input[0]=="pwd"){
