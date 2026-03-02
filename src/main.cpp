@@ -19,23 +19,7 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
-    //const char *env;
-    const char *env = getenv("PATH");
-    string pth = env;
-    // std::stringstream ss(pth);
-    vector<string> str;
-    string s = "";
-    for (auto itr : pth)
-    {
-      if (itr == ':')
-      {
-        str.push_back(s);
-        s = "";
-        continue;
-      }
-      s += itr;
-    }
-    str.push_back(s);
+
     if (command == "exit")
     {
       exit(0);
@@ -56,6 +40,22 @@ int main()
       {
         string fn = command.substr(5);
         int op = 0;
+        
+        const char *env = getenv("PATH");
+        string pth = env;
+        vector<string> str;
+        string s = "";
+        for (auto itr : pth)
+        {
+          if (itr == ':')
+          {
+            str.push_back(s);
+            s = "";
+            continue;
+          }
+          s += itr;
+        }
+        str.push_back(s);
         for (auto itr : str)
         {
           fs::path fullPath = fs::path(itr) / fn;
@@ -66,7 +66,7 @@ int main()
             {
               if (fileStat.st_mode & S_IEXEC)
               {
-                std::cout << command.substr(5) << " is " << fullPath.string() <<endl;
+                cout << command.substr(5) << " is " << fullPath.string() << endl;
                 op = 1;
                 break;
               }
