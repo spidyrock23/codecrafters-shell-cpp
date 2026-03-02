@@ -5,7 +5,7 @@
 #include <filesystem>
 #include <sys/stat.h>
 #include <sstream>
-
+#include<set>
 //#include<system>
 using namespace std;
 namespace fs = std::filesystem;
@@ -74,6 +74,8 @@ int main()
 
   //function running
   create_environment_pth();
+  set<string> builtin_commands = {"echo","exit","type","pwd"};
+
   while (true)
   {
     cout << "$ ";
@@ -95,7 +97,7 @@ int main()
     {
       string s = command.substr(5);
 
-      if (s == "echo" || s == "exit" || s == "type" || s=="pwd") // builtin command
+      if (builtin_commands.count(s)) // builtin command
       {
         cout << command.substr(5) << " is a shell builtin" << endl;
       }
