@@ -20,7 +20,7 @@ int main()
   //varibles and data structures used
   vector<string> environ_pth;
   set<string> builtin_commands = {"echo","exit","type","pwd","cd"};
-  vector<string> current_vector;
+  vector<string> current_path_vector;
 
   auto create_environment_pth = [&]()
   {
@@ -40,7 +40,7 @@ int main()
     environ_pth.push_back(s);
   };
   
-  auto file_exists = [&](string fileName)
+  auto file_exists_environment = [&](string fileName)
   {
     bool exists = 0;
     string path = "";
@@ -75,7 +75,7 @@ int main()
     }
     return ans;
   };
-  auto convert_path = [&](string input)
+  auto convert_path_vector = [&](string input)
   {
     vector<string> str;
     stringstream ss(input);
@@ -86,7 +86,7 @@ int main()
     }
     return str;
   };
-  auto convert_back = [&](vector<string> vr)
+  auto convert_vector_path = [&](vector<string> vr)
   {
     string s = "";
     for(auto itr : vr)
@@ -95,12 +95,12 @@ int main()
     }
     return s;
   };
-  auto path_exists = [&](string path)
+  auto path_exists_check = [&](string path)
   {
     bool an = fs::exists(path) && fs::is_directory(path);
     return an;
   };
-  current_vector = convert_path(filesystem::current_path().string().substr(1));
+  current_path_vector = convert_path_vector(filesystem::current_path().string().substr(1));
   
   // function running
   create_environment_pth();
@@ -118,17 +118,18 @@ int main()
     else if (input[0]=="cd"){
       vector<string> current;
       if(input[1][0] =='/'){
-        if(path_exists(input[1]))
+        if(path_exists_check(input[1]))
         {
-          current_vector = convert_path(input[1].substr(1));
+          //remove the initial / because converting it will add extra blank space due to delimeter use
+          current_path_vector = convert_path_vector(input[1].substr(1));
         }
         else{
           cout << "cd: " << input[1] << ": No such file or directory" << endl;
         }
       }
       else{
-        current = current_vector;
-        vector<string> vr = convert_path(input[1]);
+        current = current_path_vector;
+        vector<string> vr = convert_path_vector(input[1]);
         for(auto itr : vr){
           if(itr == ".."){
             current.pop_back();
@@ -140,8 +141,8 @@ int main()
             current.push_back(itr);
           }
         }
-        if(path_exists(convert_back(current))){
-          current_vector = current;
+        if(path_exists_check(convert_vector_path(current))){
+          current_path_vector = current;
         }
         else{
           cout << "cd: " << input[1] << ": No such file or directory" << endl;
@@ -149,7 +150,7 @@ int main()
       }
     }
     else if(input[0]=="pwd"){
-      cout << convert_back(current_vector) << endl;
+      cout << convert_vector_path(current_path_vector) << endl;
     }
     else if (input[0] == "echo")
     {
@@ -164,7 +165,7 @@ int main()
       }
       else
       {
-        auto [exists, path] = file_exists(command.substr(5));
+        auto [exists, path] = file_exists_environment(command.substr(5));
         if (exists)
         {
           cout << command.substr(5) << " is " << path << endl;
@@ -176,8 +177,7 @@ int main()
       }
     }
     else{
-      
-      auto [exists, path] = file_exists(input[0]);
+      auto [exists, path] = file_exists_environment(input[0]);
       if(exists){
         system(command.c_str());
       }
