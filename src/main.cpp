@@ -20,7 +20,8 @@ int main()
   //varibles and data structures used
   vector<string> environ_pth;
   set<string> builtin_commands = {"echo","exit","type","pwd","cd"};
-  string current_path = filesystem::current_path().string();
+  vector<string> current_vector;
+
   auto create_environment_pth = [&]()
   {
     const char *env = getenv("PATH");
@@ -74,8 +75,33 @@ int main()
     }
     return ans;
   };
-
-  //function running
+  auto convert_path = [&](string input)
+  {
+    vector<string> str;
+    stringstream ss(input);
+    string token;
+    while(getline(ss,token,'/'))
+    {
+      str.push_back(token);
+    }
+    return str;
+  };
+  auto convert_back = [&](vector<string> vr)
+  {
+    string s = "";
+    for(auto itr : vr)
+    {
+      s += '/' + itr;
+    }
+    return s;
+  };
+  auto path_exists = [&](string path)
+  {
+    bool an = fs::exists(path) && fs::is_directory(path);
+    return an;
+  };
+  current_vector = convert_path(filesystem::current_path().string());
+  // function running
   create_environment_pth();
 
   while (true)
@@ -89,15 +115,40 @@ int main()
       exit(0);
     }
     else if (input[0]=="cd"){
-      if(fs::exists(input[1]) && fs::is_directory(input[1])){
-        current_path = input[1];
+      vector<string> current;
+      if(input[1][0] =='/'){
+        if(path_exists(input[1]))
+        {
+          current_vector = convert_path(input[1]);
+        }
+        else{
+          cout << "cd: " << input[1] << ": No such file or directory" << endl;
+        }
       }
       else{
-        cout << "cd: " << input[1] << ": No such file or directory" << endl;
+        current = current_vector;
+        vector<string> vr = convert_path(input[1]);
+        for(auto itr : vr){
+          if(itr == ".."){
+            current.pop_back();
+          }
+          else if (itr=="."){
+            continue;
+          }
+          else{
+            current.push_back(itr);
+          }
+        }
+        if(path_exists(convert_back(current))){
+          current_vector = current;
+        }
+        else{
+          cout << "cd: " << input[1] << ": No such file or directory" << endl;
+        }
       }
     }
     else if(input[0]=="pwd"){
-      cout << current_path << endl;
+      cout << convert_back(current_vector) << endl;
     }
     else if (input[0] == "echo")
     {
