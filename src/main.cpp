@@ -81,22 +81,21 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
-    string initial = command.substr(0, 5);
-    if (command == "exit")
+    vector<string> input = seperate_string(command);
+    if (input[0] == "exit")
     {
       exit(0);
     }
-    else if(command=="pwd"){
+    else if(input[0]=="pwd"){
       cout << filesystem::current_path().string() << endl;
     }
-    else if (initial == "echo ")
+    else if (input[0] == "echo")
     {
       cout << command.substr(5) << std::endl;
     }
-    else if (initial == "type ")
+    else if (input[0] == "type")
     {
       string s = command.substr(5);
-
       if (builtin_commands.count(s)) // builtin command
       {
         cout << command.substr(5) << " is a shell builtin" << endl;
@@ -115,7 +114,7 @@ int main()
       }
     }
     else{
-      vector<string> input = seperate_string(command);
+      
       auto [exists, path] = file_exists(input[0]);
       if(exists){
         system(command.c_str());
