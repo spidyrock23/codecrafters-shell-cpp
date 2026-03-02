@@ -5,6 +5,7 @@
 #include <filesystem>
 #include <sys/stat.h>
 #include <sstream>
+
 //#include<system>
 using namespace std;
 namespace fs = std::filesystem;
@@ -83,7 +84,10 @@ int main()
     {
       exit(0);
     }
-    if (initial == "echo ")
+    else if(command=="pwd"){
+      cout << std::filesystem::current_path() << endl;
+    }
+    else if (initial == "echo ")
     {
       cout << command.substr(5) << std::endl;
     }
