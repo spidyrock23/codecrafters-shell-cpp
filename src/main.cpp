@@ -84,9 +84,9 @@ int main()
     {
       exit(0);
     }
-    // else if(command=="pwd"){
-    //   cout << std::filesystem::current_path() << endl;
-    // }
+    else if(command=="pwd"){
+      cout << std::filesystem::current_path() << endl;
+    }
     else if (initial == "echo ")
     {
       cout << command.substr(5) << std::endl;
