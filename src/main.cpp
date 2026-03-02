@@ -19,9 +19,8 @@ int main()
 
   //varibles and data structures used
   vector<string> environ_pth;
-  set<string> builtin_commands = {"echo","exit","type","pwd"};
-
-  
+  set<string> builtin_commands = {"echo","exit","type","pwd","cd"};
+  string current_path = filesystem::current_path().string();
   auto create_environment_pth = [&]()
   {
     const char *env = getenv("PATH");
@@ -89,12 +88,20 @@ int main()
     {
       exit(0);
     }
+    else if (input[0]=="cd"){
+      if(fs::exists(input[1]) && fs::is_directory(input[1])){
+        current_path = input[1];
+      }
+      else{
+        cout << "cd: " << input[1] << ": No such file or directory exists" << endl;
+      }
+    }
     else if(input[0]=="pwd"){
-      cout << filesystem::current_path().string() << endl;
+      cout << current_path << endl;
     }
     else if (input[0] == "echo")
     {
-      cout << command.substr(5) << std::endl;
+      cout << command.substr(5) << endl;
     }
     else if (input[0] == "type")
     {
