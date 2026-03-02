@@ -100,7 +100,8 @@ int main()
     bool an = fs::exists(path) && fs::is_directory(path);
     return an;
   };
-  current_vector = convert_path(filesystem::current_path().string());
+  current_vector = convert_path(filesystem::current_path().string().substr(1));
+  
   // function running
   create_environment_pth();
 
@@ -119,7 +120,7 @@ int main()
       if(input[1][0] =='/'){
         if(path_exists(input[1]))
         {
-          current_vector = convert_path(input[1]);
+          current_vector = convert_path(input[1].substr(1));
         }
         else{
           cout << "cd: " << input[1] << ": No such file or directory" << endl;
