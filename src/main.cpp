@@ -109,12 +109,14 @@ int main()
       }
     }
     else{
-      //vector<string> input = seperate_string(command);
-      //auto [exists, path] = file_exists(input[0]);
-      int dg = system(command.c_str());
-      // if(dg){
-      //   cout << command << ": command not found" << endl;
-      // }
+      vector<string> input = seperate_string(command);
+      auto [exists, path] = file_exists(input[0]);
+      if(exists){
+        system(command.c_str());
+      }
+      else{
+        cout << command << ": command not found" << endl;
+      }
     }
   }
 }
