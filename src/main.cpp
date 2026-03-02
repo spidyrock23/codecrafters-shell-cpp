@@ -19,8 +19,8 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
-    const char *env;
-    const char *env = getenv(env);
+    //const char *env;
+    const char *env = getenv("PATH");
     string pth = env;
     // std::stringstream ss(pth);
     vector<string> str;
@@ -64,9 +64,9 @@ int main()
             struct stat fileStat;
             if (stat(fullPath.string().c_str(), &fileStat) == 0)
             {
-              if (fileStat.st_mode && S_IEXEC)
+              if (fileStat.st_mode & S_IEXEC)
               {
-                std::cout << "File has execute permission (for owner).\n";
+                std::cout << command.substr(5) << " is " << fullPath.string() <<endl;
                 op = 1;
                 break;
               }
