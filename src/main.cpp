@@ -117,7 +117,12 @@ int main()
     }
     else if (input[0]=="cd"){
       vector<string> current;
-      if(input[1][0] =='/'){
+      if(input[1][0]=='~'){
+        const char *home = getenv("HOME");
+        string pth = home;
+        current_path_vector = convert_path_vector(pth.substr(1));
+      }
+      else if(input[1][0] =='/'){
         if(path_exists_check(input[1]))
         {
           //remove the initial / because converting it will add extra blank space due to delimeter use
