@@ -95,7 +95,7 @@ int main()
     {
       string s = command.substr(5);
 
-      if (s == "echo" || s == "exit" || s == "type") // builtin command
+      if (s == "echo" || s == "exit" || s == "type" || s=="pwd") // builtin command
       {
         cout << command.substr(5) << " is a shell builtin" << endl;
       }
