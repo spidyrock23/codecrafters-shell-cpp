@@ -118,8 +118,8 @@ int main()
     else if (input[0]=="cd"){
       vector<string> current;
       if(input[1][0]=='~'){
-        const char *home = getenv("HOME");
-        string pth = home;
+        //const char *home = ;
+        string pth = getenv("HOME");
         current_path_vector = convert_path_vector(pth.substr(1));
       }
       else if(input[1][0] =='/'){
