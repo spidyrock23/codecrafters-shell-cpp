@@ -182,7 +182,7 @@ int main()
             s += itr;
           }
           else{
-            if(!flag){
+            if(flag){
               s += itr;
             }
             else{
