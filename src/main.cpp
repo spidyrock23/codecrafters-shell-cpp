@@ -5,8 +5,8 @@
 #include <filesystem>
 #include <sys/stat.h>
 #include <sstream>
-#include<set>
-//#include<system>
+#include <set>
+// #include<system>
 using namespace std;
 namespace fs = std::filesystem;
 int main()
@@ -17,15 +17,14 @@ int main()
 
   // TODO: Uncomment the code below to pass the first stage
 
-  //varibles and data structures used
+  // varibles and data structures used
   vector<string> environ_pth;
-  set<string> builtin_commands = {"echo","exit","type","pwd","cd"};
+  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd"};
   vector<string> current_path_vector;
 
   auto create_environment_pth = [&]()
   {
-    const char *env = getenv("PATH");
-    string pth = env;
+    string pth = getenv("PATH");
     string s = "";
     for (auto itr : pth)
     {
@@ -39,7 +38,7 @@ int main()
     }
     environ_pth.push_back(s);
   };
-  
+
   auto file_exists_environment = [&](string fileName)
   {
     bool exists = 0;
@@ -67,10 +66,11 @@ int main()
   };
   auto seperate_string = [&](string input)
   {
-    vector<string>ans;
+    vector<string> ans;
     stringstream ss(input);
     string word;
-    while(ss>>word){
+    while (ss >> word)
+    {
       ans.push_back(word);
     }
     return ans;
@@ -80,7 +80,7 @@ int main()
     vector<string> str;
     stringstream ss(input);
     string token;
-    while(getline(ss,token,'/'))
+    while (getline(ss, token, '/'))
     {
       str.push_back(token);
     }
@@ -89,7 +89,7 @@ int main()
   auto convert_vector_path = [&](vector<string> vr)
   {
     string s = "";
-    for(auto itr : vr)
+    for (auto itr : vr)
     {
       s += '/' + itr;
     }
@@ -97,13 +97,12 @@ int main()
   };
   auto path_exists_check = [&](string path)
   {
-    bool an = fs::exists(path) && fs::is_directory(path);
-    return an;
+    return fs::exists(path) && fs::is_directory(path);
   };
-  current_path_vector = convert_path_vector(filesystem::current_path().string().substr(1));
-  
+
   // function running
   create_environment_pth();
+  current_path_vector = convert_path_vector(filesystem::current_path().string().substr(1));
 
   while (true)
   {
@@ -115,51 +114,96 @@ int main()
     {
       exit(0);
     }
-    else if (input[0]=="cd"){
+    else if (input[0] == "cd")
+    {
       vector<string> current;
-      if(input[1][0]=='~'){
-        //const char *home = ;
+      if (input[1][0] == '~')
+      {
         string pth = getenv("HOME");
         current_path_vector = convert_path_vector(pth.substr(1));
       }
-      else if(input[1][0] =='/'){
-        if(path_exists_check(input[1]))
+      else if (input[1][0] == '/')
+      {
+        if (path_exists_check(input[1]))
         {
-          //remove the initial / because converting it will add extra blank space due to delimeter use
+          // remove the initial / because converting it will add extra blank space due to delimeter use
           current_path_vector = convert_path_vector(input[1].substr(1));
         }
-        else{
+        else
+        {
           cout << "cd: " << input[1] << ": No such file or directory" << endl;
         }
       }
-      else{
+      else
+      {
         current = current_path_vector;
         vector<string> vr = convert_path_vector(input[1]);
-        for(auto itr : vr){
-          if(itr == ".."){
+        for (auto itr : vr)
+        {
+          if (itr == "..")
+          {
             current.pop_back();
           }
-          else if (itr=="."){
+          else if (itr == ".")
+          {
             continue;
           }
-          else{
+          else
+          {
             current.push_back(itr);
           }
         }
-        if(path_exists_check(convert_vector_path(current))){
+        if (path_exists_check(convert_vector_path(current)))
+        {
           current_path_vector = current;
         }
-        else{
+        else
+        {
           cout << "cd: " << input[1] << ": No such file or directory" << endl;
         }
       }
     }
-    else if(input[0]=="pwd"){
+    else if (input[0] == "pwd")
+    {
       cout << convert_vector_path(current_path_vector) << endl;
     }
     else if (input[0] == "echo")
     {
-      cout << command.substr(5) << endl;
+      string s = command.substr(5);
+      int n=  s.size();
+      int flag = 0;
+      vector<string> ans;
+      string s = "";
+      for(auto itr : command.substr(5)){
+        if(itr=='\''){
+          s += itr;
+          flag = !flag;
+        }
+        else{
+          if(itr!=' '){
+            s += itr;
+          }
+          else{
+            if(!flag){
+              s += itr;
+            }
+            else{
+              if(s!="")
+              ans.push_back(s);
+              s = "";
+            }
+          }
+        }
+      }
+      if(s!=""){
+        ans.push_back(s);
+      }
+      string an = "";
+      for(auto itr : ans)
+      {
+        an += itr + " ";
+      }
+      cout << an << endl;
     }
     else if (input[0] == "type")
     {
@@ -181,12 +225,15 @@ int main()
         }
       }
     }
-    else{
+    else
+    {
       auto [exists, path] = file_exists_environment(input[0]);
-      if(exists){
+      if (exists)
+      {
         system(command.c_str());
       }
-      else{
+      else
+      {
         cout << command << ": command not found" << endl;
       }
     }
