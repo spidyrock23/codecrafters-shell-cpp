@@ -199,7 +199,11 @@ int main()
       string an = "";
       for(auto itr : ans)
       {
-        an += itr + " ";
+        if(itr[0]=='\'')
+        {
+          itr = itr.substr(1, itr.size()-1);
+        }
+        an += itr+" ";
       }
       cout << an << endl;
     }
