@@ -170,42 +170,32 @@ int main()
     else if (input[0] == "echo")
     {
       int flag = 0;
-      vector<string> ans;
       string s = "";
+      string ans = "";
       for(auto itr : command.substr(5)){
         if(itr=='\''){
-          s += itr;
-          flag = !flag;
+          flag = 1 - flag;
+          continue;
+        }
+        if(itr!=' '){
+          ans += itr;
+          continue;
+        }
+        if(flag){
+          ans += itr;
         }
         else{
-          if(itr!=' '){
-            s += itr;
+          if(flag){
+            ans += itr;
           }
           else{
-            if(flag){
-              s += itr;
-            }
-            else{
-              if(s!="")
-              ans.push_back(s);
-              s = "";
+            if(ans.size() && ans.back()!=' '){
+              ans += itr;
             }
           }
         }
       }
-      if(s!=""){
-        ans.push_back(s);
-      }
-      string an = "";
-      for(auto itr : ans)
-      {
-        if(itr[0]=='\'')
-        {
-          itr = itr.substr(1, itr.size()-2);
-        }
-        an += itr+" ";
-      }
-      cout << an << endl;
+      cout << ans << endl;
     }
     else if (input[0] == "type")
     {
