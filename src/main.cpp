@@ -201,7 +201,7 @@ int main()
       {
         if(itr[0]=='\'')
         {
-          itr = itr.substr(1, itr.size()-1);
+          itr = itr.substr(1, itr.size()-2);
         }
         an += itr+" ";
       }
