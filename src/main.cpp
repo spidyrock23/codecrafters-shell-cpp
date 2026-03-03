@@ -172,8 +172,11 @@ int main()
       int flag = 0;
       int flag2 = 0;
       string ans = "";
-      for (auto itr : command.substr(5))
+      // auto itr :
+      string s = command.substr(5);
+      for (int i = 0; i < s.size(); i++)
       {
+        char itr = s[i];
         if (itr == '\"')
         {
           flag2 ^= 1;
@@ -186,7 +189,21 @@ int main()
         }
         if (itr != ' ')
         {
-          ans += itr;
+          if (itr != '\\')
+          {
+            ans += itr;
+            continue;
+          }
+          if (flag || flag2)
+          {
+            ans += itr;
+          }
+          else
+          {
+            char nxt = s[i + 1];
+            ans += nxt;
+            i++;
+          }
           continue;
         }
         if (flag || flag2)
