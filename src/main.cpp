@@ -170,7 +170,6 @@ int main()
     else if (input[0] == "echo")
     {
       int flag = 0;
-      string s = "";
       string ans = "";
       for(auto itr : command.substr(5)){
         if(itr=='\''){
