@@ -176,7 +176,7 @@ int main()
       for (int i = 0; i < current_string.size(); i++)
       {
         char itr = current_string[i];
-        if (!flag&&itr == '\"')
+        if (!flag && itr == '\"')
         {
           flag2 ^= 1;
           continue;
@@ -195,7 +195,17 @@ int main()
           }
           if (flag || flag2)
           {
-            ans += itr;
+            if (flag)
+            {
+              ans += itr;
+              continue;
+            }
+            else
+            {
+              char nxt = current_string[i + 1];
+              ans += nxt;
+              i++;
+            }
           }
           else
           {
