@@ -176,7 +176,7 @@ int main()
       for (int i = 0; i < current_string.size(); i++)
       {
         char itr = current_string[i];
-        if (itr == '\"')
+        if (!flag&&itr == '\"')
         {
           flag2 ^= 1;
           continue;
