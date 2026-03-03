@@ -172,11 +172,10 @@ int main()
       int flag = 0;
       int flag2 = 0;
       string ans = "";
-      // auto itr :
-      string s = command.substr(5);
-      for (int i = 0; i < s.size(); i++)
+      string current_string = command.substr(5);
+      for (int i = 0; i < current_string.size(); i++)
       {
-        char itr = s[i];
+        char itr = current_string[i];
         if (itr == '\"')
         {
           flag2 ^= 1;
@@ -200,7 +199,7 @@ int main()
           }
           else
           {
-            char nxt = s[i + 1];
+            char nxt = current_string[i + 1];
             ans += nxt;
             i++;
           }
