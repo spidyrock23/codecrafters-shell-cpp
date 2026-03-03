@@ -169,8 +169,6 @@ int main()
     }
     else if (input[0] == "echo")
     {
-      string s = command.substr(5);
-      int n=  s.size();
       int flag = 0;
       vector<string> ans;
       string s = "";
