@@ -170,27 +170,34 @@ int main()
     else if (input[0] == "echo")
     {
       int flag = 0;
+      int flag2 = 0;
       string ans = "";
-      for(auto itr : command.substr(5)){
-        if(itr=='\''){
-          flag = 1 - flag;
+      for (auto itr : command.substr(5))
+      {
+        if (itr == '\"')
+        {
+          flag2 ^= 1;
           continue;
         }
-        if(itr!=' '){
+        if (!flag2 && itr == '\'')
+        {
+          flag ^= 1;
+          continue;
+        }
+        if (itr != ' ')
+        {
           ans += itr;
           continue;
         }
-        if(flag){
+        if (flag || flag2)
+        {
           ans += itr;
         }
-        else{
-          if(flag){
+        else
+        {
+          if (ans.size() && ans.back() != ' ')
+          {
             ans += itr;
-          }
-          else{
-            if(ans.size() && ans.back()!=' '){
-              ans += itr;
-            }
           }
         }
       }
