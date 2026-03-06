@@ -162,6 +162,9 @@ int main()
         }
       }
     }
+    if(ans!=""){
+      fin_ans.push_back(ans);
+    }
     return fin_ans;
   };
   // function running
@@ -174,6 +177,11 @@ int main()
     string command;
     getline(std::cin, command);
     vector<string> input = string_conv(command);
+    cout << command << endl;
+    for(auto itr : input){
+      cout << itr << " ";
+    }
+    cout << endl;
     if (input[0] == "exit")
     {
       exit(0);
