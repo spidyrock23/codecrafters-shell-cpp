@@ -99,14 +99,13 @@ int main()
   {
     return fs::exists(path) && fs::is_directory(path);
   };
-  auto string_conv = [&](string s)
+  auto remove_qoutes= [&](string s)
   {
-    int n = s.length();
-    vector<string> fin_ans;
-    string ans = "";
-    string current_string = s;
+    vector<string> vct;
     int flag = 0;
     int flag2 = 0;
+    string ans = "";
+    string current_string = s;
     for (int i = 0; i < current_string.size(); i++)
     {
       char itr = current_string[i];
@@ -157,15 +156,13 @@ int main()
       {
         if (ans.size())
         {
-          fin_ans.push_back(ans);
+          vct.push_back(ans);
           ans = "";
         }
       }
     }
-    if(ans!=""){
-      fin_ans.push_back(ans);
-    }
-    return fin_ans;
+    if(ans.size()){vct.push_back(ans);}
+    return vct;
   };
   // function running
   create_environment_pth();
@@ -176,14 +173,7 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
-    //cout << "op" << endl;
-    vector<string> input = seperate_string(command);
-    //cout << command << endl;
-    // for(auto itr : input){
-    //   cout << itr << endl;
-    // }
-    // cout << endl;
-    //cout << "op" << endl;
+    vector<string> input = remove_qoutes(command);
     if (input[0] == "exit")
     {
       exit(0);
@@ -243,63 +233,10 @@ int main()
     }
     else if (input[0] == "echo")
     {
+      auto current = remove_qoutes(command.substr(5));
       string ans = "";
-      string current_string = command.substr(5);
-      int flag = 0;
-      int flag2 = 0;
-      for (int i = 0; i < current_string.size(); i++)
-      {
-        char itr = current_string[i];
-        if (!flag && itr == '\"')
-        {
-          flag2 ^= 1;
-          continue;
-        }
-        if (!flag2 && itr == '\'')
-        {
-          flag ^= 1;
-          continue;
-        }
-        if (itr != ' ')
-        {
-          if (itr != '\\')
-          {
-            ans += itr;
-            continue;
-          }
-          if (flag || flag2)
-          {
-            if (flag)
-            {
-              ans += itr;
-              continue;
-            }
-            else
-            {
-              char nxt = current_string[i + 1];
-              ans += nxt;
-              i++;
-            }
-          }
-          else
-          {
-            char nxt = current_string[i + 1];
-            ans += nxt;
-            i++;
-          }
-          continue;
-        }
-        if (flag || flag2)
-        {
-          ans += itr;
-        }
-        else
-        {
-          if (ans.size() && ans.back() != ' ')
-          {
-            ans += itr;
-          }
-        }
+      for(auto itr : current){
+        ans += itr + " ";
       }
       cout << ans << endl;
     }
