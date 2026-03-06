@@ -177,7 +177,7 @@ int main()
     string command;
     getline(std::cin, command);
     //cout << "op" << endl;
-    vector<string> input = string_conv(command);
+    vector<string> input = seperate_string(command);
     //cout << command << endl;
     // for(auto itr : input){
     //   cout << itr << endl;
