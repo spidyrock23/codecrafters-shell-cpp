@@ -1,0 +1,1 @@
+{"name":"Local: test","url":"c:\\Users\\MMG\\Desktop\\C++proj\\codecrafters-shell-cpp\\src\\test.cpp","tests":[{"id":1772785412384,"input":"cd 'exe  with  space'","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\MMG\\Desktop\\C++proj\\codecrafters-shell-cpp\\src\\test.cpp","group":"local","local":true}

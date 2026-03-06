@@ -176,12 +176,14 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
+    //cout << "op" << endl;
     vector<string> input = string_conv(command);
-    cout << command << endl;
-    for(auto itr : input){
-      cout << itr << " ";
-    }
-    cout << endl;
+    //cout << command << endl;
+    // for(auto itr : input){
+    //   cout << itr << endl;
+    // }
+    // cout << endl;
+    //cout << "op" << endl;
     if (input[0] == "exit")
     {
       exit(0);
