@@ -99,7 +99,7 @@ int main()
   {
     return fs::exists(path) && fs::is_directory(path);
   };
-  auto code_conv = [&](string s)
+  auto code_convertor= [&](string s)
   {
     vector<string> vct;
     int flag = 0;
@@ -173,12 +173,7 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
-    vector<string> input = code_conv(command);
-    // for(auto i : input){
-    //   cout << i << endl;
-    //   ;
-    // }
-    // cout << endl;
+    vector<string> input = code_convertor(command);
     if (input[0] == "exit")
     {
       exit(0);
@@ -238,63 +233,10 @@ int main()
     }
     else if (input[0] == "echo")
     {
-      int flag = 0;
-      int flag2 = 0;
+      auto curr = code_convertor(command.substr(5));
       string ans = "";
-      string current_string = command.substr(5);
-      for (int i = 0; i < current_string.size(); i++)
-      {
-        char itr = current_string[i];
-        if (!flag && itr == '\"')
-        {
-          flag2 ^= 1;
-          continue;
-        }
-        if (!flag2 && itr == '\'')
-        {
-          flag ^= 1;
-          continue;
-        }
-        if (itr != ' ')
-        {
-          if (itr != '\\')
-          {
-            ans += itr;
-            continue;
-          }
-          if (flag || flag2)
-          {
-            if (flag)
-            {
-              ans += itr;
-              continue;
-            }
-            else
-            {
-              char nxt = current_string[i + 1];
-              ans += nxt;
-              i++;
-            }
-          }
-          else
-          {
-            char nxt = current_string[i + 1];
-            ans += nxt;
-            i++;
-          }
-          continue;
-        }
-        if (flag || flag2)
-        {
-          ans += itr;
-        }
-        else
-        {
-          if (ans.size() && ans.back() != ' ')
-          {
-            ans += itr;
-          }
-        }
+      for(auto itr : curr){
+        ans += itr + " ";
       }
       cout << ans << endl;
     }
