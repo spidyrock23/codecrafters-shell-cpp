@@ -99,7 +99,7 @@ int main()
   {
     return fs::exists(path) && fs::is_directory(path);
   };
-  auto code_convertor= [&](string s)
+  auto remove_qoutes= [&](string s)
   {
     vector<string> vct;
     int flag = 0;
@@ -173,7 +173,7 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
-    vector<string> input = code_convertor(command);
+    vector<string> input = remove_qoutes(command);
     if (input[0] == "exit")
     {
       exit(0);
@@ -233,9 +233,9 @@ int main()
     }
     else if (input[0] == "echo")
     {
-      auto curr = code_convertor(command.substr(5));
+      auto current = remove_qoutes(command.substr(5));
       string ans = "";
-      for(auto itr : curr){
+      for(auto itr : current){
         ans += itr + " ";
       }
       cout << ans << endl;
