@@ -15,7 +15,6 @@ int main()
   std::cerr << std::unitbuf;
 
   // TODO: Uncomment the code below to pass the first stage
-
   // varibles and data structures used
   vector<string> environ_pth;
   set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd"};
