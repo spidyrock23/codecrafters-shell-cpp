@@ -157,13 +157,12 @@ int main()
         if (ans.size())
         {
           vct.push_back(ans);
-          //ans += itr;
+          ans = "";
         }
       }
     }
     if(ans.size()){vct.push_back(ans);}
     return vct;
-    //cout << ans << endl;
   };
   // function running
   create_environment_pth();
@@ -175,6 +174,11 @@ int main()
     string command;
     getline(std::cin, command);
     vector<string> input = code_conv(command);
+    // for(auto i : input){
+    //   cout << i << endl;
+    //   ;
+    // }
+    // cout << endl;
     if (input[0] == "exit")
     {
       exit(0);
