@@ -263,7 +263,8 @@ int main()
         cout << ans << endl;
       }
       else{
-        content = ans + '\n';
+        
+        content = ans;
       }
     }
     else if (input[0] == "ls")
