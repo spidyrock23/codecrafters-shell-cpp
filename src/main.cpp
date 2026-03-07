@@ -184,7 +184,6 @@ int main()
     {
       file = input.back();
       output = 1;
-      // cout << file << endl;
       input.pop_back();
       input.pop_back();
     }
@@ -241,33 +240,57 @@ int main()
         }
       }
     }
+    else if (input[0] == "cat")
+    {
+      string ans = "";
+      int bg = 0;
+      for (auto itr : input)
+      {
+        if (bg == 0)
+        {
+          bg = 1;
+          continue;
+        }
+        ifstream file(itr);
+        string line;
+        while (getline(file, line))
+        {
+          ans += line;
+        }
+        file.close();
+      }
+      if(!output){
+        cout << ans << endl;
+      }
+      else{
+        content = ans + '\n';
+      }
+    }
     else if (input[0] == "ls")
     {
       string ans = "";
-
       string path = input[1];
-      int op = 1;
+      int flag = 1;
       if (input[1] == "-1")
       {
         path = input[2];
-        op = 0;
+        flag = 0;
       }
       vector<string> filename;
       for (const auto &entry : fs::directory_iterator(path))
       {
         string curr = entry.path().filename().string();
-        if (!op)
+        if (!flag)
         {
           curr += '\n';
         }
         filename.push_back(curr);
       }
       sort(filename.begin(), filename.end());
-      if (op)
+      if (flag)
       {
         filename.back() += '\n';
       }
-
       for (auto it : filename)
       {
         ans += it;
