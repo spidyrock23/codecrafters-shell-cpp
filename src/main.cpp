@@ -255,7 +255,7 @@ int main()
         string line;
         while (getline(file, line))
         {
-          ans += line;
+          ans += line+'\n';
         }
         file.close();
       }
