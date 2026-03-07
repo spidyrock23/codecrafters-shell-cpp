@@ -176,10 +176,10 @@ int main()
     string command;
     getline(std::cin, command);
     vector<string> input = remove_qoutes(command);
-    int output = 0;
-    int size = input.size();
-    string file = "";
-    string content = "";
+    // int output = 0;
+    // int size = input.size();
+    // string file = "";
+    // string content = "";
     // if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
     // {
     //   file = input.back();
@@ -257,14 +257,15 @@ int main()
       {
         ans += itr + " ";
       }
-      if (!output)
-      {
-        cout << ans << endl;
-      }
-      else
-      {
-        content = ans;
-      }
+      cout << ans << endl;
+      // if (!output)
+      // {
+      //   cout << ans << endl;
+      // }
+      // else
+      // {
+      //   content = ans;
+      // }
     }
     else if (input[0] == "type")
     {
@@ -298,15 +299,15 @@ int main()
         cout << command << ": command not found" << endl;
       }
     }
-    auto file_content_add = [&](string content, string path)
-    {
-      std::ofstream file(path); // path to file
-      file << content;
-      file.close();
-    };
-    if (output)
-    {
-      file_content_add(content,file);
-    }
+    // auto file_content_add = [&](string content, string path)
+    // {
+    //   std::ofstream file(path); // path to file
+    //   file << content;
+    //   file.close();
+    // };
+    // if (output)
+    // {
+    //   file_content_add(content,file);
+    // }
   }
 }
