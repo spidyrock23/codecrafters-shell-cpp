@@ -292,7 +292,7 @@ int main()
       }
       else
       {
-        content = ans;
+        content = ans+'\n';
       }
     }
     else if (input[0] == "type")
