@@ -18,7 +18,7 @@ int main()
   // TODO: Uncomment the code below to pass the first stage
   // varibles and data structures used
   vector<string> environ_pth;
-  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls", "cat"};
+  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls"};
   vector<string> current_path_vector;
 
   auto create_environment_pth = [&]()
