@@ -244,10 +244,19 @@ int main()
     else if (input[0] == "ls")
     {
       string ans = "";
+
       string path = input[1];
+      int op = 1;
+      if(input[1]=="-1"){
+        path = input[2];
+        op = 0;
+      }
       for (const auto &entry : fs::directory_iterator(path))
       {
-        ans += entry.path().filename().string()+'\n';
+        ans += entry.path().filename().string();
+        if(!op){
+          ans += '\n';
+        }
       }
       if(!output){
         cout << ans << endl;
