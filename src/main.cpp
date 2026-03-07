@@ -306,7 +306,7 @@ int main()
     };
     if (output)
     {
-      file_content_add(content,file);
+      //file_content_add(content,file);
     }
   }
 }
