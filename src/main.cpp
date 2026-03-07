@@ -244,6 +244,7 @@ int main()
     {
       string ans = "";
       int bg = 0;
+      vector<string> error;
       for (auto itr : input)
       {
         if (bg == 0)
@@ -252,17 +253,34 @@ int main()
           continue;
         }
         ifstream file(itr);
+        if(fs::exists(itr))
+        {}
+        else{
+          error.push_back(itr);
+          continue;
+        }
         string line;
         while (getline(file, line))
         {
-          ans += line+'\n';
+          ans += line + '\n';
         }
         file.close();
       }
-      if(!output){
-        cout << ans;
+      if (!output)
+      {
+        if (error.size() == 0)
+        {
+          cout << ans;
+        }
+        else
+        {
+          for(auto it : error){
+            cout << "cat: " << it << ": No such file or directory" << endl;
+          }
+        }
       }
-      else{
+      else
+      {
         content = ans;
       }
     }
