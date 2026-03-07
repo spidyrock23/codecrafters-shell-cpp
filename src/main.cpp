@@ -184,8 +184,8 @@ int main()
     {
       file = input.back();
       output = 1;
-      input.pop_back();
-      input.pop_back();
+      // input.pop_back();
+      // input.pop_back();
     }
     if (input[0] == "exit")
     {
@@ -306,7 +306,7 @@ int main()
     };
     if (output)
     {
-      //file_content_add(content,file);
+      file_content_add(content,file);
     }
   }
 }
