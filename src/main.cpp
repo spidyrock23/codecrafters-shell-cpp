@@ -247,24 +247,37 @@ int main()
 
       string path = input[1];
       int op = 1;
-      if(input[1]=="-1"){
+      if (input[1] == "-1")
+      {
         path = input[2];
         op = 0;
       }
+      vector<string> filename;
       for (const auto &entry : fs::directory_iterator(path))
       {
-        ans += entry.path().filename().string();
-        if(!op){
-          ans += '\n';
+        string curr = entry.path().filename().string();
+        if (!op)
+        {
+          curr += '\n';
         }
+        filename.push_back(curr);
       }
-      if(op){
-        ans += '\n';
+      sort(filename.begin(), filename.end());
+      if (op)
+      {
+        filename.back() += '\n';
       }
-      if(!output){
+
+      for (auto it : filename)
+      {
+        ans += it;
+      }
+      if (!output)
+      {
         cout << ans << endl;
       }
-      else{
+      else
+      {
         content = ans;
       }
     }
@@ -292,7 +305,7 @@ int main()
       }
       else
       {
-        content = ans+'\n';
+        content = ans + '\n';
       }
     }
     else if (input[0] == "type")
