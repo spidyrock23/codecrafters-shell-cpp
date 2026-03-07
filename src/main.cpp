@@ -257,15 +257,15 @@ int main()
       {
         ans += itr + " ";
       }
-      // cout << ans << endl;
-      if (!output)
-      {
-        cout << ans << endl;
-      }
-      else
-      {
-        content = ans;
-      }
+       cout << ans << endl;
+      // if (!output)
+      // {
+      //   cout << ans << endl;
+      // }
+      // else
+      // {
+      //   content = ans;
+      // }
     }
     else if (input[0] == "type")
     {
@@ -305,9 +305,9 @@ int main()
       file << content;
       file.close();
     };
-    if (output)
-    {
-      file_content_add(content,file);
-    }
+    // if (output)
+    // {
+    //   file_content_add(content,file);
+    // }
   }
 }
