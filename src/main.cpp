@@ -258,7 +258,10 @@ int main()
           string line;
           while (getline(file, line))
           {
-            ans += line;
+            ans += line + '\n';
+          }
+          if(ans.back()=='\n'){
+            ans.pop_back();
           }
         }
         else
@@ -271,6 +274,7 @@ int main()
       {
         cout << "cat: " << it << ": No such file or directory" << endl;
       }
+      ans += '\n';
       if (!output)
       {
         if (error.size() == 0)
