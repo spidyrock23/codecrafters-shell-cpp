@@ -258,6 +258,9 @@ int main()
           ans += '\n';
         }
       }
+      if(op){
+        ans += '\n';
+      }
       if(!output){
         cout << ans << endl;
       }
