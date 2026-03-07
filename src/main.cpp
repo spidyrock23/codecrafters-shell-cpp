@@ -175,18 +175,25 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
+    // cout << command << endl;
     vector<string> input = remove_qoutes(command);
     int output = 0;
     int size = input.size();
     string file = "";
     string content = "";
-    // if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
-    // {
-    //   file = input.back();
-    //   output = 1;
-    //   input.pop_back();
-    //   input.pop_back();
+    // for(auto itr : input){
+    //   cout << itr << endl;
     // }
+    // cout << endl;
+    // continue;
+    if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
+    {
+      file = input.back();
+      output = 1;
+      //cout << file << endl;
+      input.pop_back();
+      input.pop_back();
+    }
     if (input[0] == "exit")
     {
       exit(0);
@@ -247,25 +254,25 @@ int main()
     else if (input[0] == "echo")
     {
       vector<string> current = remove_qoutes(command.substr(5));
-      //current.clear();
-      // for (int i = 1; i < input.size(); i++)
-      // {
-      //   current.push_back(input[i]);
-      // }
+      current.clear();
+      for (int i = 1; i < input.size(); i++)
+      {
+        current.push_back(input[i]);
+      }
       string ans = "";
       for (auto itr : current)
       {
         ans += itr + " ";
       }
-       cout << ans << endl;
-      // if (!output)
-      // {
-      //   cout << ans << endl;
-      // }
-      // else
-      // {
-      //   content = ans;
-      // }
+      // cout << ans << endl;
+      if (!output)
+      {
+        cout << ans << endl;
+      }
+      else
+      {
+        content = ans;
+      }
     }
     else if (input[0] == "type")
     {
@@ -305,9 +312,9 @@ int main()
       file << content;
       file.close();
     };
-    // if (output)
-    // {
-    //   file_content_add(content,file);
-    // }
+    if (output)
+    {
+      file_content_add(content,file);
+    }
   }
 }
