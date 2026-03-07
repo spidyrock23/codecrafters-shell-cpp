@@ -18,7 +18,7 @@ int main()
   // TODO: Uncomment the code below to pass the first stage
   // varibles and data structures used
   vector<string> environ_pth;
-  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd"};
+  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls", "cat"};
   vector<string> current_path_vector;
 
   auto create_environment_pth = [&]()
@@ -184,7 +184,7 @@ int main()
     {
       file = input.back();
       output = 1;
-      //cout << file << endl;
+      // cout << file << endl;
       input.pop_back();
       input.pop_back();
     }
@@ -239,6 +239,21 @@ int main()
         {
           cout << "cd: " << input[1] << ": No such file or directory" << endl;
         }
+      }
+    }
+    else if (input[0] == "ls")
+    {
+      string ans = "";
+      string path = input[1];
+      for (const auto &entry : fs::directory_iterator(path))
+      {
+        ans += entry.path().filename().string()+'\n';
+      }
+      if(!output){
+        cout << ans << endl;
+      }
+      else{
+        content = ans;
       }
     }
     else if (input[0] == "pwd")
@@ -308,7 +323,7 @@ int main()
     };
     if (output)
     {
-      file_content_add(content,file);
+      file_content_add(content, file);
     }
   }
 }
