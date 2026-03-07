@@ -175,17 +175,11 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
-    // cout << command << endl;
     vector<string> input = remove_qoutes(command);
     int output = 0;
     int size = input.size();
     string file = "";
     string content = "";
-    // for(auto itr : input){
-    //   cout << itr << endl;
-    // }
-    // cout << endl;
-    // continue;
     if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
     {
       file = input.back();
