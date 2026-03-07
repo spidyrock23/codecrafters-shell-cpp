@@ -176,17 +176,17 @@ int main()
     string command;
     getline(std::cin, command);
     vector<string> input = remove_qoutes(command);
-    // int output = 0;
-    // int size = input.size();
-    // string file = "";
-    // string content = "";
-    // if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
-    // {
-    //   file = input.back();
-    //   output = 1;
-      // input.pop_back();
-      // input.pop_back();
-    // }
+    int output = 0;
+    int size = input.size();
+    string file = "";
+    string content = "";
+    if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
+    {
+      file = input.back();
+      output = 1;
+      input.pop_back();
+      input.pop_back();
+    }
     if (input[0] == "exit")
     {
       exit(0);
@@ -246,26 +246,26 @@ int main()
     }
     else if (input[0] == "echo")
     {
-      vector<string> current;
-      current.clear();
-      for (int i = 1; i < input.size(); i++)
-      {
-        current.push_back(input[i]);
-      }
+      vector<string> current = remove_qoutes(command.substr(5));
+      //current.clear();
+      // for (int i = 1; i < input.size(); i++)
+      // {
+      //   current.push_back(input[i]);
+      // }
       string ans = "";
       for (auto itr : current)
       {
         ans += itr + " ";
       }
-      cout << ans << endl;
-      // if (!output)
-      // {
-      //   cout << ans << endl;
-      // }
-      // else
-      // {
-      //   content = ans;
-      // }
+      // cout << ans << endl;
+      if (!output)
+      {
+        cout << ans << endl;
+      }
+      else
+      {
+        content = ans;
+      }
     }
     else if (input[0] == "type")
     {
@@ -299,15 +299,15 @@ int main()
         cout << command << ": command not found" << endl;
       }
     }
-    // auto file_content_add = [&](string content, string path)
-    // {
-    //   std::ofstream file(path); // path to file
-    //   file << content;
-    //   file.close();
-    // };
-    // if (output)
-    // {
-    //   file_content_add(content,file);
-    // }
+    auto file_content_add = [&](string content, string path)
+    {
+      std::ofstream file(path); // path to file
+      file << content;
+      file.close();
+    };
+    if (output)
+    {
+      file_content_add(content,file);
+    }
   }
 }
