@@ -253,30 +253,29 @@ int main()
           continue;
         }
         ifstream file(itr);
-        if(fs::exists(itr))
-        {}
-        else{
-          error.push_back(itr);
-          continue;
-        }
-        string line;
-        while (getline(file, line))
+        if (fs::exists(itr))
         {
-          ans += line + '\n';
+          string line;
+          while (getline(file, line))
+          {
+            ans += line + '\n';
+          }
+        }
+        else
+        {
+          error.push_back(itr);
         }
         file.close();
+      }
+      for (auto it : error)
+      {
+        cout << "cat: " << it << ": No such file or directory" << endl;
       }
       if (!output)
       {
         if (error.size() == 0)
         {
           cout << ans;
-        }
-        else
-        {
-          for(auto it : error){
-            cout << "cat: " << it << ": No such file or directory" << endl;
-          }
         }
       }
       else
