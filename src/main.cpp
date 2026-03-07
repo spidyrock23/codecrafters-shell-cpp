@@ -258,7 +258,7 @@ int main()
           string line;
           while (getline(file, line))
           {
-            ans += line + '\n';
+            ans += line;
           }
         }
         else
