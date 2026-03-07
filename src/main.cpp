@@ -180,13 +180,13 @@ int main()
     int size = input.size();
     string file = "";
     string content = "";
-    if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
-    {
-      file = input.back();
-      output = 1;
-      input.pop_back();
-      input.pop_back();
-    }
+    // if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
+    // {
+    //   file = input.back();
+    //   output = 1;
+    //   input.pop_back();
+    //   input.pop_back();
+    // }
     if (input[0] == "exit")
     {
       exit(0);
