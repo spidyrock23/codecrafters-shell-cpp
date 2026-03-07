@@ -260,10 +260,9 @@ int main()
         file.close();
       }
       if(!output){
-        cout << ans << endl;
+        cout << ans;
       }
       else{
-        
         content = ans;
       }
     }
