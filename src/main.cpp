@@ -286,6 +286,9 @@ int main()
       {
         sterr += "cat: " + it + ": No such file or directory\n";
       }
+      if(sterr!=""){
+        sterr.pop_back();
+      }
       //ans += '\n';
       stout = ans;
     }
