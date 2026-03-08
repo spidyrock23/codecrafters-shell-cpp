@@ -313,7 +313,8 @@ int main()
       }
       if (!(fs::exists(path)))
       {
-        sterr += "ls: cannot access " + input[2] + ": No such file or directory\n";
+        //sterr += "ls: cannot access " + input[2] + ": No such file or directory\n";
+        sterr += "ls: " + input[2] + ": No such file or directory";
       }
       else
       {
