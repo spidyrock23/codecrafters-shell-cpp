@@ -19,6 +19,7 @@ int main()
 
   // TODO: Uncomment the code below to pass the first stage
   // varibles and data structures used
+
   vector<string> environ_pth;
   set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls"};
   vector<string> current_path_vector;
@@ -100,7 +101,7 @@ int main()
   {
     return fs::exists(path) && fs::is_directory(path);
   };
-  auto remove_qoutes = [&](string s)
+  auto remove_quotes = [&](string s)
   {
     vector<string> vct;
     int flag = 0;
@@ -177,7 +178,7 @@ int main()
     cout << "$ ";
     string command;
     getline(std::cin, command);
-    vector<string> input = remove_qoutes(command);
+    vector<string> input = remove_quotes(command);
     bool output = 0;
     bool error = 0;
     int size = input.size();
@@ -219,7 +220,8 @@ int main()
         }
         else
         {
-          cout << "cd: " << input[1] << ": No such file or directory" << endl;
+          //cout << "cd: " << input[1] << ": No such file or directory" << endl;
+          sterr += "cd: " + input[1] + ": No such file or directory";
         }
       }
       else
@@ -247,7 +249,8 @@ int main()
         }
         else
         {
-          cout << "cd: " << input[1] << ": No such file or directory" << endl;
+          //cout << "cd: " << input[1] << ": No such file or directory" << endl;
+          sterr += "cd: " + input[1] + ": No such file or directory";
         }
       }
     }
@@ -289,7 +292,6 @@ int main()
       if(sterr!=""){
         sterr.pop_back();
       }
-      //ans += '\n';
       stout = ans;
     }
     else if (input[0] == "ls")
@@ -332,12 +334,13 @@ int main()
     }
     else if (input[0] == "pwd")
     {
-      cout << convert_vector_path(current_path_vector) << endl;
+      //cout << convert_vector_path(current_path_vector) << endl;
+      stout += convert_vector_path(current_path_vector);
     }
     else if (input[0] == "echo")
     {
-      vector<string> current = remove_qoutes(command.substr(5));
-      current.clear();
+      //current.clear();
+      vector<string> current;
       for (int i = 1; i < input.size(); i++)
       {
         current.push_back(input[i]);
@@ -347,34 +350,28 @@ int main()
       {
         ans += itr + " ";
       }
-      // cout << ans << endl;
       stout = ans;
-      // if (!output)
-      // {
-      //   cout << ans << endl;
-      // }
-      // else
-      // {
-      //   stout = ans + '\n';
-      // }
     }
     else if (input[0] == "type")
     {
       string s = command.substr(5);
       if (builtin_commands.count(s)) // builtin command
       {
-        cout << command.substr(5) << " is a shell builtin" << endl;
+        //cout << command.substr(5) << " is a shell builtin" << endl;
+        stout += command.substr(5) + " is a shell builtin";
       }
       else
       {
         auto [exists, path] = file_exists_environment(command.substr(5));
         if (exists)
         {
-          cout << command.substr(5) << " is " << path << endl;
+          //cout << command.substr(5) << " is " << path << endl;
+          stout += command.substr(5) + " is " + path;
         }
         else
         {
-          cout << command.substr(5) << ": not found" << endl;
+          //cout << command.substr(5) << ": not found" << endl;
+          sterr += command.substr(5) + ": not found";
         }
       }
     }
@@ -387,7 +384,8 @@ int main()
       }
       else
       {
-        cout << command << ": command not found" << endl;
+        //cout << command << ": command not found" << endl;
+        sterr+=command + ": command not found";
       }
     }
     auto file_content_add = [&](string content, string path)
@@ -403,7 +401,7 @@ int main()
     else
     {
       if (stout != "")
-        cout << stout<<endl;
+        cout << stout << endl;
     }
 
     if (error)
@@ -413,7 +411,7 @@ int main()
     else
     {
       if (sterr != "")
-        cout << sterr<<endl;
+        cout << sterr << endl;
     }
   }
 }
