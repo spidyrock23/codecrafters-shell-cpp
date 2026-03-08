@@ -284,22 +284,10 @@ int main()
       }
       for (auto it : error)
       {
-        // cout << "cat: " << it << ": No such file or directory" << endl;
         sterr += "cat: " + it + ": No such file or directory\n";
       }
-      ans += '\n';
+      //ans += '\n';
       stout = ans;
-      // if (!output)
-      // {
-      //   if (error.size() == 0)
-      //   {
-      //     cout << ans;
-      //   }
-      // }
-      // else
-      // {
-      //   stout = ans;
-      // }
     }
     else if (input[0] == "ls")
     {
@@ -313,7 +301,6 @@ int main()
       }
       if (!(fs::exists(path)))
       {
-        //sterr += "ls: cannot access " + input[2] + ": No such file or directory\n";
         sterr += "ls: " + input[2] + ": No such file or directory";
       }
       else
