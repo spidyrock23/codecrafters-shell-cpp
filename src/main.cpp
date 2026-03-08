@@ -176,14 +176,23 @@ int main()
     string command;
     getline(std::cin, command);
     vector<string> input = remove_qoutes(command);
-    int output = 0;
+    bool output = 0;
+    bool error = 0;
     int size = input.size();
     string file = "";
-    string content = "";
+    string stout = "";
+    string sterr = "";
     if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
     {
       file = input.back();
       output = 1;
+      input.pop_back();
+      input.pop_back();
+    }
+    else if (input.size() >= 2 && input[size - 2] == "2>")
+    {
+      file = input.back();
+      error = 1;
       input.pop_back();
       input.pop_back();
     }
@@ -260,7 +269,8 @@ int main()
           {
             ans += line + '\n';
           }
-          if(ans.back()=='\n'){
+          if (ans.back() == '\n')
+          {
             ans.pop_back();
           }
         }
@@ -272,20 +282,22 @@ int main()
       }
       for (auto it : error)
       {
-        cout << "cat: " << it << ": No such file or directory" << endl;
+        //cout << "cat: " << it << ": No such file or directory" << endl;
+        sterr += "cat: " + it + ": No such file or directory\n";
       }
       ans += '\n';
-      if (!output)
-      {
-        if (error.size() == 0)
-        {
-          cout << ans;
-        }
-      }
-      else
-      {
-        content = ans;
-      }
+      stout = ans;
+      // if (!output)
+      // {
+      //   if (error.size() == 0)
+      //   {
+      //     cout << ans;
+      //   }
+      // }
+      // else
+      // {
+      //   stout = ans;
+      // }
     }
     else if (input[0] == "ls")
     {
@@ -316,14 +328,7 @@ int main()
       {
         ans += it;
       }
-      if (!output)
-      {
-        cout << ans << endl;
-      }
-      else
-      {
-        content = ans;
-      }
+      stout = ans+'\n';
     }
     else if (input[0] == "pwd")
     {
@@ -343,14 +348,15 @@ int main()
         ans += itr + " ";
       }
       // cout << ans << endl;
-      if (!output)
-      {
-        cout << ans << endl;
-      }
-      else
-      {
-        content = ans + '\n';
-      }
+      stout = ans+'\n';
+      // if (!output)
+      // {
+      //   cout << ans << endl;
+      // }
+      // else
+      // {
+      //   stout = ans + '\n';
+      // }
     }
     else if (input[0] == "type")
     {
@@ -392,7 +398,19 @@ int main()
     };
     if (output)
     {
-      file_content_add(content, file);
+      file_content_add(stout, file);
+    }
+    else{
+      if(stout!="")
+      cout << stout;
+    }
+
+    if(error){
+      file_content_add(sterr, file);
+    }
+    else{
+      if(sterr!="")
+      cout << sterr;
     }
   }
 }
