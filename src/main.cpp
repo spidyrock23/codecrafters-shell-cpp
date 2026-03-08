@@ -393,7 +393,7 @@ int main()
       if (append)
       {
         std::ofstream file(path, std::ios::app);
-        file << content;
+        file << '\n'+content;
         file.close();
       }
       else
