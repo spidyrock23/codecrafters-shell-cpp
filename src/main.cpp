@@ -7,6 +7,7 @@
 #include <sstream>
 #include <set>
 #include <fstream>
+#include<algorithm>
 using namespace std;
 namespace fs = std::filesystem;
 int main()
