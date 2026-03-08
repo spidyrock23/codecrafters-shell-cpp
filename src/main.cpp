@@ -390,24 +390,22 @@ int main()
     }
     auto file_content_add = [&](string content, string path, bool append)
     {
-      std::ofstream file(path); // path to file
       if (append)
       {
         std::ofstream file(path, std::ios::app);
-      }
-      file << content;
-      file.close();
-    };
-    if (output)
-    {
-      if (output == 1)
-      {
-        file_content_add(stout, file, 0);
+        file << content;
+        file.close();
       }
       else
       {
-        file_content_add(stout, file, 1);
+        std::ofstream file(path);
+        file << content;
+        file.close();
       }
+    };
+    if (output)
+    {
+      file_content_add(stout, file, output - 1);
     }
     else
     {
@@ -417,7 +415,7 @@ int main()
 
     if (error)
     {
-      file_content_add(sterr, file, 0);
+      file_content_add(sterr, file, error - 1);
     }
     else
     {
