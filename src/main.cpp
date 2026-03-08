@@ -321,7 +321,7 @@ int main()
         }
         filename.push_back(curr);
       }
-      sort(filename.begin(), filename.end());
+      //sort(filename.begin(), filename.end());
       if (flag)
       {
         filename.back() += '\n';
