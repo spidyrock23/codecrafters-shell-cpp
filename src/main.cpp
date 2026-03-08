@@ -324,7 +324,7 @@ int main()
         {
           ans += it;
         }
-        stout = ans + '\n';
+        stout = ans;
       }
     }
     else if (input[0] == "pwd")
@@ -345,7 +345,7 @@ int main()
         ans += itr + " ";
       }
       // cout << ans << endl;
-      stout = ans + '\n';
+      stout = ans;
       // if (!output)
       // {
       //   cout << ans << endl;
@@ -400,7 +400,7 @@ int main()
     else
     {
       if (stout != "")
-        cout << stout;
+        cout << stout<<endl;
     }
 
     if (error)
@@ -410,7 +410,7 @@ int main()
     else
     {
       if (sterr != "")
-        cout << sterr;
+        cout << sterr<<endl;
     }
   }
 }
