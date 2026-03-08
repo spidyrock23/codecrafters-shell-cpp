@@ -284,7 +284,7 @@ int main()
       }
       for (auto it : error)
       {
-        //cout << "cat: " << it << ": No such file or directory" << endl;
+        // cout << "cat: " << it << ": No such file or directory" << endl;
         sterr += "cat: " + it + ": No such file or directory\n";
       }
       ans += '\n';
@@ -311,26 +311,33 @@ int main()
         path = input[2];
         flag = 0;
       }
-      vector<string> filename;
-      for (const auto &entry : fs::directory_iterator(path))
+      if (!(fs::exists(path)))
       {
-        string curr = entry.path().filename().string();
-        if (!flag)
+        sterr += "ls: cannot access " + input[2] + ": No such file or directory\n";
+      }
+      else
+      {
+        vector<string> filename;
+        for (const auto &entry : fs::directory_iterator(path))
         {
-          curr += '\n';
+          string curr = entry.path().filename().string();
+          if (!flag)
+          {
+            curr += '\n';
+          }
+          filename.push_back(curr);
         }
-        filename.push_back(curr);
+        sort(filename.begin(), filename.end());
+        if (flag)
+        {
+          filename.back() += '\n';
+        }
+        for (auto it : filename)
+        {
+          ans += it;
+        }
+        stout = ans + '\n';
       }
-      sort(filename.begin(), filename.end());
-      if (flag)
-      {
-        filename.back() += '\n';
-      }
-      for (auto it : filename)
-      {
-        ans += it;
-      }
-      stout = ans+'\n';
     }
     else if (input[0] == "pwd")
     {
@@ -350,7 +357,7 @@ int main()
         ans += itr + " ";
       }
       // cout << ans << endl;
-      stout = ans+'\n';
+      stout = ans + '\n';
       // if (!output)
       // {
       //   cout << ans << endl;
@@ -402,17 +409,20 @@ int main()
     {
       file_content_add(stout, file);
     }
-    else{
-      if(stout!="")
-      cout << stout;
+    else
+    {
+      if (stout != "")
+        cout << stout;
     }
 
-    if(error){
+    if (error)
+    {
       file_content_add(sterr, file);
     }
-    else{
-      if(sterr!="")
-      cout << sterr;
+    else
+    {
+      if (sterr != "")
+        cout << sterr;
     }
   }
 }
