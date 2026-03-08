@@ -393,7 +393,7 @@ int main()
       if (append)
       {
         std::ofstream file(path, std::ios::app);
-        file << '\n'+content;
+        file << content;
         file.close();
       }
       else
@@ -405,7 +405,7 @@ int main()
     };
     if (output)
     {
-      file_content_add(stout, file, output - 1);
+      file_content_add(stout+'\n', file, output - 1);
     }
     else
     {
@@ -415,7 +415,7 @@ int main()
 
     if (error)
     {
-      file_content_add(sterr, file, error - 1);
+      file_content_add(sterr+'\n', file, error - 1);
     }
     else
     {
