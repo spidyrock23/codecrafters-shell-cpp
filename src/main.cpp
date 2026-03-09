@@ -196,7 +196,7 @@ int main()
       file = input.back();
       if (input[size - 2] == ">" || input[size - 2] == "1>")
       output = 1;
-      else if (input[size - 2] == ">>" && input[size - 2] == "1>>")
+      else if (input[size - 2] == ">>" || input[size - 2] == "1>>")
       output = 2;
       else if (input[size - 2] == "2>")
       error = 1;
