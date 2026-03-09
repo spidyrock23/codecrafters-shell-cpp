@@ -22,7 +22,7 @@ int main()
   set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls"};
   vector<string> current_path_vector;
 
-  //functions used
+  // functions used
   auto create_environment_pth = [&]()
   {
     string pth = getenv("PATH");
@@ -325,9 +325,13 @@ int main()
           filename.push_back(curr);
         }
         sort(filename.begin(), filename.end());
-        if (flag)
+        if (!flag)
         {
-          filename.back() += '\n';
+          if (filename.size())
+          {
+            filename.pop_back();
+          }
+          // filename.back() += '\n';
         }
         for (auto it : filename)
         {
@@ -398,7 +402,7 @@ int main()
     };
     if (output)
     {
-      file_content_add(stout+'\n', file, output - 1);
+      file_content_add(stout + '\n', file, output - 1);
     }
     else
     {
@@ -407,7 +411,7 @@ int main()
     }
     if (error)
     {
-      file_content_add(sterr+'\n', file, error - 1);
+      file_content_add(sterr + '\n', file, error - 1);
     }
     else
     {
