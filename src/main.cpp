@@ -207,7 +207,7 @@ int main()
     else if (input.size() >= 2 && (input[size - 2] == "2>>"))
     {
       file = input.back();
-      output = 2;
+      error = 2;
       input.pop_back();
       input.pop_back();
     }
