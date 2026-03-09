@@ -329,7 +329,7 @@ int main()
         {
           if (filename.size())
           {
-            filename.pop_back();
+            filename.back().pop_back();
           }
           // filename.back() += '\n';
         }
