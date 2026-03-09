@@ -21,7 +21,7 @@ int main()
   vector<string> environ_pth;
   set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls"};
   vector<string> current_path_vector;
-
+  set<string> redirect = {"2>", "2>>", ">", ">>", "1>", "1>>"};
   // functions used
   auto create_environment_pth = [&]()
   {
@@ -65,17 +65,6 @@ int main()
     pair<int, string> ans = {exists, path};
     return ans;
   };
-  auto seperate_string = [&](string input)
-  {
-    vector<string> ans;
-    stringstream ss(input);
-    string word;
-    while (ss >> word)
-    {
-      ans.push_back(word);
-    }
-    return ans;
-  };
   auto convert_path_vector = [&](string input)
   {
     vector<string> str;
@@ -95,10 +84,6 @@ int main()
       s += '/' + itr;
     }
     return s;
-  };
-  auto path_exists_check = [&](string path)
-  {
-    return fs::exists(path) && fs::is_directory(path);
   };
   auto remove_quotes = [&](string current_string)
   {
@@ -206,30 +191,16 @@ int main()
     string file = "";
     string stout = "";
     string sterr = "";
-    if (input.size() >= 2 && (input[size - 2] == ">" || input[size - 2] == "1>"))
+    if (input.size() > 2 && redirect.count(input[size - 2]))
     {
       file = input.back();
+      if (input[size - 2] == ">" || input[size - 2] == "1>")
       output = 1;
-      input.pop_back();
-      input.pop_back();
-    }
-    else if (input.size() >= 2 && input[size - 2] == "2>")
-    {
-      file = input.back();
-      error = 1;
-      input.pop_back();
-      input.pop_back();
-    }
-    else if (input.size() >= 2 && (input[size - 2] == ">>" || input[size - 2] == "1>>"))
-    {
-      file = input.back();
+      else if (input[size - 2] == ">>" && input[size - 2] == "1>>")
       output = 2;
-      input.pop_back();
-      input.pop_back();
-    }
-    else if (input.size() >= 2 && (input[size - 2] == "2>>"))
-    {
-      file = input.back();
+      else if (input[size - 2] == "2>")
+      error = 1;
+      else
       error = 2;
       input.pop_back();
       input.pop_back();
@@ -248,7 +219,7 @@ int main()
       }
       else if (input[1][0] == '/')
       {
-        if (path_exists_check(input[1]))
+        if (fs::exists(input[1]) && fs::is_directory(input[1]))
         {
           // remove the initial / because converting it will add extra blank space due to delimeter use
           current_path_vector = convert_path_vector(input[1].substr(1));
@@ -277,7 +248,7 @@ int main()
             current.push_back(itr);
           }
         }
-        if (path_exists_check(convert_vector_path(current)))
+        if (fs::exists(convert_vector_path(current)) && fs::is_directory(convert_vector_path(current)))
         {
           current_path_vector = current;
         }
