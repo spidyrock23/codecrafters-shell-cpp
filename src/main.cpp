@@ -19,9 +19,11 @@ int main()
 
   // varibles and data structures used
   vector<string> environ_pth;
-  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls"};
-  vector<string> current_path_vector;
+  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls","history"};
   set<string> redirect = {"2>", "2>>", ">", ">>", "1>", "1>>"};
+  vector<string> current_path_vector;
+  vector<string> store_history;
+
   // functions used
   auto create_environment_pth = [&]()
   {
@@ -185,6 +187,7 @@ int main()
     string command;
     getline(std::cin, command);
     vector<string> input = remove_quotes(command);
+    store_history.push_back(command);
     int output = 0;
     int error = 0;
     int size = input.size();
@@ -208,6 +211,13 @@ int main()
     if (input[0] == "exit")
     {
       exit(0);
+    }
+    else if(input[0]=="history"){
+      int cnt = 0;
+      for(auto itr : store_history){
+        cnt++;
+        stout += to_string(cnt) + " " + itr + "\n";
+      }
     }
     else if (input[0] == "cd")
     {
