@@ -218,6 +218,7 @@ int main()
         cnt++;
         stout += to_string(cnt) + " " + itr + "\n";
       }
+      stout.back().pop_back();
     }
     else if (input[0] == "cd")
     {
