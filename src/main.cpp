@@ -19,7 +19,7 @@ int main()
 
   // varibles and data structures used
   vector<string> environ_pth;
-  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls","history"};
+  set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls", "history"};
   set<string> redirect = {"2>", "2>>", ">", ">>", "1>", "1>>"};
   vector<string> current_path_vector;
   vector<string> store_history;
@@ -212,11 +212,17 @@ int main()
     {
       exit(0);
     }
-    else if(input[0]=="history"){
-      int cnt = 0;
-      for(auto itr : store_history){
-        cnt++;
-        stout += to_string(cnt) + " " + itr + "\n";
+    else if (input[0] == "history")
+    {
+      int si = store_history.size();
+      int bg = 0;
+      if(input.size()>1){
+        bg = max(0,si - bg-1);
+      }
+      
+      for (int i = bg; i < si; i++)
+      {
+        stout += to_string(i + 1) + " " + store_history[i] + "\n";
       }
       stout.pop_back();
     }
