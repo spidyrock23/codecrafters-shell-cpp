@@ -17,13 +17,12 @@ int main()
   std::cout << std::unitbuf;
   std::cerr << std::unitbuf;
 
-  // TODO: Uncomment the code below to pass the first stage
   // varibles and data structures used
-
   vector<string> environ_pth;
   set<string> builtin_commands = {"echo", "exit", "type", "pwd", "cd", "ls"};
   vector<string> current_path_vector;
 
+  //functions used
   auto create_environment_pth = [&]()
   {
     string pth = getenv("PATH");
@@ -101,13 +100,12 @@ int main()
   {
     return fs::exists(path) && fs::is_directory(path);
   };
-  auto remove_quotes = [&](string s)
+  auto remove_quotes = [&](string current_string)
   {
     vector<string> vct;
     int flag = 0;
     int flag2 = 0;
     string ans = "";
-    string current_string = s;
     for (int i = 0; i < current_string.size(); i++)
     {
       char itr = current_string[i];
@@ -344,15 +342,10 @@ int main()
     }
     else if (input[0] == "echo")
     {
-      vector<string> current;
+      string ans = "";
       for (int i = 1; i < input.size(); i++)
       {
-        current.push_back(input[i]);
-      }
-      string ans = "";
-      for (auto itr : current)
-      {
-        ans += itr + " ";
+        ans += input[i] + " ";
       }
       stout = ans;
     }
@@ -412,7 +405,6 @@ int main()
       if (stout != "")
         cout << stout << endl;
     }
-
     if (error)
     {
       file_content_add(sterr+'\n', file, error - 1);
