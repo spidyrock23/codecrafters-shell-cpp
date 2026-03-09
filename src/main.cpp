@@ -389,8 +389,15 @@ int main()
     {
       if (append)
       {
+        std::ifstream check(path);
+        bool has_content = check.peek() != std::ifstream::traits_type::eof();
+        check.close();
+
         std::ofstream file(path, std::ios::app);
-        file << content;
+        if (has_content)
+          file << "\n" << content;
+        else
+          file << content; 
         file.close();
       }
       else
