@@ -217,7 +217,7 @@ int main()
       int si = store_history.size();
       int bg = 0;
       if(input.size()>1){
-        bg = max(0,si - bg-1);
+        bg = max(0,si - stoi(input[1])-1);
       }
       
       for (int i = bg; i < si; i++)
