@@ -167,6 +167,29 @@ int main()
     }
     return vct;
   };
+  auto file_content_add = [&](string content, string path, bool append)
+  {
+    if (append)
+    {
+      std::ifstream check(path);
+      bool has_content = check.peek() != std::ifstream::traits_type::eof();
+      check.close();
+
+      std::ofstream file(path, std::ios::app);
+      if (has_content)
+        file << "\n"
+             << content;
+      else
+        file << content;
+      file.close();
+    }
+    else
+    {
+      std::ofstream file(path);
+      file << content;
+      file.close();
+    }
+  };
   // function running
   create_environment_pth();
   current_path_vector = convert_path_vector(filesystem::current_path().string().substr(1));
@@ -338,7 +361,6 @@ int main()
           {
             filename.back().pop_back();
           }
-          // filename.back() += '\n';
         }
         for (auto it : filename)
         {
@@ -392,28 +414,7 @@ int main()
         sterr += command + ": command not found";
       }
     }
-    auto file_content_add = [&](string content, string path, bool append)
-    {
-      if (append)
-      {
-        std::ifstream check(path);
-        bool has_content = check.peek() != std::ifstream::traits_type::eof();
-        check.close();
 
-        std::ofstream file(path, std::ios::app);
-        if (has_content)
-          file << "\n" << content;
-        else
-          file << content; 
-        file.close();
-      }
-      else
-      {
-        std::ofstream file(path);
-        file << content;
-        file.close();
-      }
-    };
     if (output)
     {
       file_content_add(stout, file, output - 1);
