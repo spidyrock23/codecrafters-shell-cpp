@@ -204,6 +204,13 @@ int main()
       input.pop_back();
       input.pop_back();
     }
+    else if (input.size() >= 2 && (input[size - 2] == "2>>"))
+    {
+      file = input.back();
+      output = 2;
+      input.pop_back();
+      input.pop_back();
+    }
     if (input[0] == "exit")
     {
       exit(0);
