@@ -215,7 +215,6 @@ int main()
     {
       char c;
       read(STDIN_FILENO, &c, 1);
-
       if (c == '\n')
       {
         store_history.push_back(command);
@@ -282,9 +281,14 @@ int main()
           }
         }
       }
+      else
+      {
+        command.insert(cursor_pos, 1, c);
+        cursor_pos++;
+        cout << c;
+      }
     }
     disable_raw();
-    // getline(std::cin, command);
     vector<string> input = remove_quotes(command);
     store_history.push_back(command);
     int output = 0;
