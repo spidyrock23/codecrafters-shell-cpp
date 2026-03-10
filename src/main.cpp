@@ -220,6 +220,7 @@ int main()
         store_history.push_back(command);
         command.clear();
         cursor_pos = 0;
+        cout << "\n";
         cout << "$ ";
       }
       else if (c == 127) // backspace
