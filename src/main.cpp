@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <termios.h>
 #include <cstdlib>
 #include <vector>
 #include <filesystem>
@@ -8,9 +9,26 @@
 #include <set>
 #include <fstream>
 #include <algorithm>
+#include <unistd.h>
 
 using namespace std;
 namespace fs = std::filesystem;
+struct termios original;
+
+void enable_raw()
+{
+  tcgetattr(STDIN_FILENO, &original);
+
+  struct termios raw = original;
+  raw.c_lflag &= ~(ICANON | ECHO);
+
+  tcsetattr(STDIN_FILENO, TCSANOW, &raw);
+}
+
+void disable_raw()
+{
+  tcsetattr(STDIN_FILENO, TCSANOW, &original);
+}
 int main()
 {
   // Flush after every std::cout / std:cerr
@@ -216,10 +234,10 @@ int main()
     {
       int si = store_history.size();
       int bg = 0;
-      if(input.size()>1){
-        bg = max(0,si - stoi(input[1]));
+      if (input.size() > 1)
+      {
+        bg = max(0, si - stoi(input[1]));
       }
-      
       for (int i = bg; i < si; i++)
       {
         stout += to_string(i + 1) + " " + store_history[i] + "\n";
@@ -319,12 +337,21 @@ int main()
     else if (input[0] == "ls")
     {
       string ans = "";
-      string path = input[1];
-      int flag = 1;
-      if (input[1] == "-1")
+
+      string path = convert_vector_path(current_path_vector);
+      //= input[1];
+      if (input.size() > 1)
       {
-        path = input[2];
-        flag = 0;
+        path = input[1];
+      }
+      int flag = 1;
+      if (input.size() > 1)
+      {
+        if (input[1] == "-1")
+        {
+          path = input[2];
+          flag = 0;
+        }
       }
       if (!(fs::exists(path)))
       {
