@@ -241,14 +241,15 @@ int main()
         {
           if (seq[1] == 'A')
           {
-            if (store_history.empty())
-              return;
+            if (!store_history.empty())
+            {
 
-            if (history_index < (int)store_history.size() - 1)
-              history_index++;
+              if (history_index < (int)store_history.size() - 1)
+                history_index++;
 
-            command = store_history[store_history.size() - 1 - history_index];
-            cursor_pos = command.size();
+              command = store_history[store_history.size() - 1 - history_index];
+              cursor_pos = command.size();
+            }
           }
           if (seq[1] == 'B')
           {
