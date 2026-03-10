@@ -203,7 +203,87 @@ int main()
   {
     cout << "$ ";
     string command;
-    getline(std::cin, command);
+    int cursor_pos = 0;
+    int history_index = -1;
+    enable_raw();
+    auto redraw = [&]()
+    {
+      cout << "\r$ ";
+      cout << command;
+    };
+    while (true)
+    {
+      char c;
+      read(STDIN_FILENO, &c, 1);
+
+      if (c == '\n')
+      {
+        store_history.push_back(command);
+        command.clear();
+        cursor_pos = 0;
+        cout << "$ ";
+      }
+      else if (c == 127) // backspace
+      {
+        if (cursor_pos > 0)
+        {
+          command.erase(cursor_pos - 1, 1);
+          cursor_pos--;
+          printf("\b \b");
+        }
+      }
+      else if (c == 27)
+      {
+        char seq[2];
+        read(STDIN_FILENO, &seq[0], 1);
+        read(STDIN_FILENO, &seq[1], 1);
+        if (seq[0] == '[')
+        {
+          if (seq[1] == 'A')
+          {
+            if (store_history.empty())
+              return;
+
+            if (history_index < (int)store_history.size() - 1)
+              history_index++;
+
+            command = store_history[store_history.size() - 1 - history_index];
+            cursor_pos = command.size();
+          }
+          if (seq[1] == 'B')
+          {
+            if (history_index > 0)
+              history_index--;
+            else
+              history_index = -1;
+            if (history_index == -1)
+              command = "";
+            else
+              command = store_history[store_history.size() - 1 - history_index];
+            cursor_pos = store_history.size();
+            redraw();
+          }
+          if (seq[1] == 'C')
+          {
+            if (cursor_pos < command.size())
+            {
+              cout << command[cursor_pos];
+              cursor_pos++;
+            }
+          }
+          if (seq[1] == 'D')
+          {
+            if (cursor_pos > 0)
+            {
+              cursor_pos--;
+              printf("\b");
+            }
+          }
+        }
+      }
+    }
+    disable_raw();
+    // getline(std::cin, command);
     vector<string> input = remove_quotes(command);
     store_history.push_back(command);
     int output = 0;
@@ -339,7 +419,6 @@ int main()
       string ans = "";
 
       string path = convert_vector_path(current_path_vector);
-      //= input[1];
       if (input.size() > 1)
       {
         path = input[1];
