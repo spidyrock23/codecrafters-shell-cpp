@@ -217,11 +217,8 @@ int main()
       read(STDIN_FILENO, &c, 1);
       if (c == '\n')
       {
-        store_history.push_back(command);
-        command.clear();
-        cursor_pos = 0;
-        cout << "\n";
-        cout << "$ ";
+        //cout << command << endl;
+        break;
       }
       else if (c == 127) // backspace
       {
@@ -290,6 +287,8 @@ int main()
       }
     }
     disable_raw();
+    cout << '\n';
+    //cout << command << endl;
     vector<string> input = remove_quotes(command);
     store_history.push_back(command);
     int output = 0;
