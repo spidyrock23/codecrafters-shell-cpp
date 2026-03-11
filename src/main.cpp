@@ -245,15 +245,13 @@ int main()
         {
           if (seq[1] == 'A')
           {
-            //cerr << "priyansh" << endl;
-            int si;
+            
             if(store_history.size())
               if (history_index > 0)
                 history_index--;
-            si = command.size();
+            int si = command.size();
             command = store_history[history_index];
             cursor_pos = command.size();
-            // cout << command<< endl;
             redraw(si);
           }
           if (seq[1] == 'B')
