@@ -209,11 +209,7 @@ int main()
     auto redraw = [&](int si)
     {
       cout << "\r$ ";
-      string s = "";
-      for (int i = 0; i < si; i++)
-      {
-        s += " ";
-      }
+      string s(si,' ');
       cout << s;
       cout << "\r$ ";
       cout << command;
@@ -245,7 +241,6 @@ int main()
         {
           if (seq[1] == 'A')
           {
-
             if (store_history.size())
               if (history_index > 0)
                 history_index--;
@@ -524,7 +519,6 @@ int main()
         sterr += command + ": command not found";
       }
     }
-
     if (output)
     {
       file_content_add(stout, file, output - 1);
