@@ -201,7 +201,6 @@ int main()
 
   while (true)
   {
-    //cout << store_history.size() << endl;
     cout << "$ ";
     string command;
     int cursor_pos = 0;
@@ -290,7 +289,6 @@ int main()
     }
     disable_raw();
     cout << '\n';
-    // cout << command << endl;
     vector<string> input = remove_quotes(command);
     store_history.push_back(command);
     int output = 0;
