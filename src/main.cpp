@@ -201,7 +201,7 @@ int main()
 
   while (true)
   {
-    cout << store_history.size() << endl;
+    //cout << store_history.size() << endl;
     cout << "$ ";
     string command;
     int cursor_pos = 0;
