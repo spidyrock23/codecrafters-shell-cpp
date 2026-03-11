@@ -208,17 +208,17 @@ int main()
     enable_raw();
     auto redraw = [&](int si)
     {
-
       cout << "\r$ ";
       string s = "";
-      for(int i= 0;i<si;i++){
+      for (int i = 0; i < si; i++)
+      {
         s += " ";
       }
       cout << s;
       cout << "\r$ ";
       cout << command;
     };
-    
+
     while (true)
     {
       char c;
@@ -233,7 +233,7 @@ int main()
         {
           command.erase(cursor_pos - 1, 1);
           cursor_pos--;
-          printf("\b \b");
+          cout << "\b \b";
         }
       }
       else if (c == 27)
@@ -245,8 +245,8 @@ int main()
         {
           if (seq[1] == 'A')
           {
-            
-            if(store_history.size())
+
+            if (store_history.size())
               if (history_index > 0)
                 history_index--;
             int si = command.size();
@@ -256,13 +256,16 @@ int main()
           }
           if (seq[1] == 'B')
           {
-            if(history_index<store_history.size()){
-              int si =command.size();
+            if (history_index < store_history.size())
+            {
+              int si = command.size();
               history_index++;
-              if(history_index<store_history.size()){
+              if (history_index < store_history.size())
+              {
                 command = store_history[history_index];
               }
-              else{
+              else
+              {
                 command = "";
               }
               cursor_pos = command.size();
@@ -282,7 +285,7 @@ int main()
             if (cursor_pos > 0)
             {
               cursor_pos--;
-              printf("\b");
+              cout << "\b";
             }
           }
         }
