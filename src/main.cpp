@@ -206,8 +206,15 @@ int main()
     int cursor_pos = 0;
     int history_index = store_history.size();
     enable_raw();
-    auto redraw = [&]()
+    auto redraw = [&](int si)
     {
+
+      cout << "\r$ ";
+      string s = "";
+      for(int i= 0;i<si;i++){
+        s += " ";
+      }
+      cout << s;
       cout << "\r$ ";
       cout << command;
     };
@@ -239,17 +246,20 @@ int main()
           if (seq[1] == 'A')
           {
             //cerr << "priyansh" << endl;
+            int si;
             if(store_history.size())
               if (history_index > 0)
                 history_index--;
-              command = store_history[history_index];
-              cursor_pos = command.size();
-              //cout << command<< endl;
-              redraw();
+            si = command.size();
+            command = store_history[history_index];
+            cursor_pos = command.size();
+            // cout << command<< endl;
+            redraw(si);
           }
           if (seq[1] == 'B')
           {
             if(history_index<store_history.size()){
+              int si =command.size();
               history_index++;
               if(history_index<store_history.size()){
                 command = store_history[history_index];
@@ -258,7 +268,7 @@ int main()
                 command = "";
               }
               cursor_pos = command.size();
-              redraw();
+              redraw(si);
             }
           }
           if (seq[1] == 'C')
