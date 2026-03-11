@@ -204,7 +204,7 @@ int main()
     cout << "$ ";
     string command;
     int cursor_pos = 0;
-    int history_index = -1;
+    int history_index = store_history.size();
     enable_raw();
     auto redraw = [&]()
     {
@@ -217,7 +217,6 @@ int main()
       read(STDIN_FILENO, &c, 1);
       if (c == '\n')
       {
-        //cout << command << endl;
         break;
       }
       else if (c == 127) // backspace
@@ -242,10 +241,10 @@ int main()
             {
 
               if (history_index < (int)store_history.size() - 1)
-                history_index++;
-
-              command = store_history[store_history.size() - 1 - history_index];
+                history_index--;
+              command = store_history[history_index];
               cursor_pos = command.size();
+              redraw();
             }
           }
           if (seq[1] == 'B')
@@ -283,12 +282,13 @@ int main()
       {
         command.insert(cursor_pos, 1, c);
         cursor_pos++;
+        history_index = store_history.size() - 1;
         cout << c;
       }
     }
     disable_raw();
     cout << '\n';
-    //cout << command << endl;
+    // cout << command << endl;
     vector<string> input = remove_quotes(command);
     store_history.push_back(command);
     int output = 0;
