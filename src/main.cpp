@@ -201,6 +201,7 @@ int main()
 
   while (true)
   {
+    cout << store_history.size() << endl;
     cout << "$ ";
     string command;
     int cursor_pos = 0;
@@ -211,6 +212,7 @@ int main()
       cout << "\r$ ";
       cout << command;
     };
+    
     while (true)
     {
       char c;
@@ -237,28 +239,28 @@ int main()
         {
           if (seq[1] == 'A')
           {
-            if (!store_history.empty())
-            {
-
-              if (history_index < (int)store_history.size() - 1)
+            //cerr << "priyansh" << endl;
+            if(store_history.size())
+              if (history_index > 0)
                 history_index--;
               command = store_history[history_index];
               cursor_pos = command.size();
+              //cout << command<< endl;
               redraw();
-            }
           }
           if (seq[1] == 'B')
           {
-            if (history_index > 0)
-              history_index--;
-            else
-              history_index = -1;
-            if (history_index == -1)
-              command = "";
-            else
-              command = store_history[store_history.size() - 1 - history_index];
-            cursor_pos = store_history.size();
-            redraw();
+            if(history_index<store_history.size()){
+              history_index++;
+              if(history_index<store_history.size()){
+                command = store_history[history_index];
+              }
+              else{
+                command = "";
+              }
+              cursor_pos = command.size();
+              redraw();
+            }
           }
           if (seq[1] == 'C')
           {
@@ -282,7 +284,7 @@ int main()
       {
         command.insert(cursor_pos, 1, c);
         cursor_pos++;
-        history_index = store_history.size() - 1;
+        history_index = store_history.size();
         cout << c;
       }
     }
