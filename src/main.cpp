@@ -339,6 +339,11 @@ int main()
           flag = 2;
           path = input[2];
         }
+        else if (input[1] == "-a")
+        {
+          flag = 3;
+          path = input[2];
+        }
         else
         {
           bg = max(0, si - stoi(input[1]));
@@ -352,14 +357,23 @@ int main()
         }
         stout.pop_back();
       }
+      else if (flag == 3)
+      {
+        string content = "";
+        for (auto itr : store_history)
+        {
+          content += itr + '\n';
+        }
+        file_content_add(content, path, 1);
+      }
       else if (flag == 2)
       {
         std::ofstream file(path);
         string content = "";
-        for(auto itr : store_history){
+        for (auto itr : store_history)
+        {
           content += itr + '\n';
         }
-        //content.pop_back();
         file << content;
         file.close();
       }
