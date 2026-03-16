@@ -359,7 +359,7 @@ int main()
         for(auto itr : store_history){
           content += itr + '\n';
         }
-        content.pop_back();
+        //content.pop_back();
         file << content;
         file.close();
       }
