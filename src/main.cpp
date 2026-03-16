@@ -376,7 +376,10 @@ int main()
         {
           content += itr + '\n';
         }
-        file_content_add(content, path, 0);
+        std::ofstream file(path);
+        file << content;
+        file.close();
+        //file_content_add(content, path, 0);
       }
       else
       {
