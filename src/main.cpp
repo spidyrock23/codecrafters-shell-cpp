@@ -362,14 +362,14 @@ int main()
         string content = "";
 
         reverse(store_history.begin(), store_history.end());
-        int ct = 0;
+        int count = 0;
         for (auto itr : store_history)
         {
           vector<string> comb = remove_quotes(itr);
           if(comb.size()>=2 && comb[0]=="history" && comb[1]=="-a"){
-            ct++;
+            count++;
           }
-          if(ct==2){
+          if(count==2){
             break;
           }
           reverse(itr.begin(), itr.end());
