@@ -45,12 +45,18 @@ int main()
   // functions used
   auto set_history = [&]()
   {
-    string path = getenv("HISTFILE");
-    ifstream file(path);
-    string line = "";
-    while(getline(file,line)){
-      if(line!="")
-      store_history.push_back(line);
+    char *path = getenv("HISTFILE");
+    if (path != NULL)
+    {
+      ifstream file(path);
+      string line = "";
+      while (getline(file, line))
+      {
+        if (line != "")
+        {
+          store_history.push_back(line);
+        }
+      }
     }
   };
   auto create_environment_pth = [&]()
@@ -376,14 +382,16 @@ int main()
         for (auto itr : store_history)
         {
           vector<string> comb = remove_quotes(itr);
-          if(comb.size()>=2 && comb[0]=="history" && comb[1]=="-a"){
+          if (comb.size() >= 2 && comb[0] == "history" && comb[1] == "-a")
+          {
             count++;
           }
-          if(count==2){
+          if (count == 2)
+          {
             break;
           }
           reverse(itr.begin(), itr.end());
-          content += '\n'+itr;
+          content += '\n' + itr;
         }
         reverse(store_history.begin(), store_history.end());
         reverse(content.begin(), content.end());
