@@ -336,6 +336,16 @@ int main()
     }
     if (input[0] == "exit")
     {
+      string content = "";
+      for(auto itr : store_history){
+        content += itr + '\n';
+      }
+      char *ptr = getenv("HISTFILE");
+      if(ptr){
+        ofstream file(ptr,ios::app);
+        file << content;
+        file.close();
+      }
       exit(0);
     }
     else if (input[0] == "history")
