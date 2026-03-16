@@ -209,7 +209,7 @@ int main()
     auto redraw = [&](int si)
     {
       cout << "\r$ ";
-      string s(si,' ');
+      string s(si, ' ');
       cout << s;
       cout << "\r$ ";
       cout << command;
@@ -325,15 +325,38 @@ int main()
     {
       int si = store_history.size();
       int bg = 0;
+      string path = "";
+      int flag = 1;
       if (input.size() > 1)
       {
-        bg = max(0, si - stoi(input[1]));
+        if (input[1] == "-r")
+        {
+          path = input[2];
+          flag = 0;
+        }
+        else
+        {
+          bg = max(0, si - stoi(input[1]));
+        }
       }
-      for (int i = bg; i < si; i++)
+      if (flag)
       {
-        stout += to_string(i + 1) + " " + store_history[i] + "\n";
+        for (int i = bg; i < si; i++)
+        {
+          stout += to_string(i + 1) + " " + store_history[i] + "\n";
+        }
+        stout.pop_back();
       }
-      stout.pop_back();
+      else
+      {
+        ifstream file(path);
+        string line;
+        while (getline(file, line))
+        {
+          store_history.push_back(line);
+        }
+        file.close();
+      }
     }
     else if (input[0] == "cd")
     {
@@ -430,17 +453,28 @@ int main()
       string ans = "";
 
       string path = convert_vector_path(current_path_vector);
-      if (input.size() > 1)
-      {
-        path = input[1];
-      }
       int flag = 1;
-      if (input.size() > 1)
+      if (input.size() == 2)
+      {
+        if (input[1] == "-1")
+        {
+          flag = 0;
+        }
+        else
+        {
+          path = input[1];
+        }
+      }
+      if (input.size() > 2)
       {
         if (input[1] == "-1")
         {
           path = input[2];
           flag = 0;
+        }
+        else
+        {
+          path = input[1];
         }
       }
       if (!(fs::exists(path)))
