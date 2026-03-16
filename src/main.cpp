@@ -342,7 +342,7 @@ int main()
       }
       char *ptr = getenv("HISTFILE");
       if(ptr){
-        ofstream file(ptr,ios::app);
+        ofstream file(ptr);
         file << content;
         file.close();
       }
