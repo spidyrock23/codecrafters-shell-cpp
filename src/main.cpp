@@ -360,14 +360,26 @@ int main()
       else if (flag == 3)
       {
         string content = "";
+
+        reverse(store_history.begin(), store_history.end());
+        int ct = 0;
         for (auto itr : store_history)
         {
-          content += itr + '\n';
+          vector<string> comb = remove_quotes(itr);
+          if(comb.size()>=2 && comb[0]=="history" && comb[1]=="-a"){
+            ct++;
+          }
+          if(ct==2){
+            break;
+          }
+          reverse(itr.begin(), itr.end());
+          content += '\n'+itr;
         }
+        reverse(store_history.begin(), store_history.end());
+        reverse(content.begin(), content.end());
         std::ofstream file(path, std::ios::app);
         file << content;
         file.close();
-        //file_content_add(content, path, 1);
       }
       else if (flag == 2)
       {
@@ -379,7 +391,6 @@ int main()
         std::ofstream file(path);
         file << content;
         file.close();
-        //file_content_add(content, path, 0);
       }
       else
       {
