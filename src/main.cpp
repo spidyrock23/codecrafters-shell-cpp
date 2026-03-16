@@ -43,6 +43,16 @@ int main()
   vector<string> store_history;
 
   // functions used
+  auto set_history = [&]()
+  {
+    string path = getenv("HISTFILE");
+    ifstream file(path);
+    string line = "";
+    while(getline(file,line)){
+      if(line!="")
+      store_history.push_back(line);
+    }
+  };
   auto create_environment_pth = [&]()
   {
     string pth = getenv("PATH");
@@ -197,6 +207,7 @@ int main()
   };
   // function running
   create_environment_pth();
+  set_history();
   current_path_vector = convert_path_vector(filesystem::current_path().string().substr(1));
 
   while (true)
@@ -360,7 +371,6 @@ int main()
       else if (flag == 3)
       {
         string content = "";
-
         reverse(store_history.begin(), store_history.end());
         int count = 0;
         for (auto itr : store_history)
