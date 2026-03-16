@@ -364,18 +364,19 @@ int main()
         {
           content += itr + '\n';
         }
-        file_content_add(content, path, 1);
+        std::ofstream file(path, std::ios::app);
+        file << content;
+        file.close();
+        //file_content_add(content, path, 1);
       }
       else if (flag == 2)
       {
-        std::ofstream file(path);
         string content = "";
         for (auto itr : store_history)
         {
           content += itr + '\n';
         }
-        file << content;
-        file.close();
+        file_content_add(content, path, 0);
       }
       else
       {
