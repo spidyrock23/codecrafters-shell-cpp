@@ -334,18 +334,34 @@ int main()
           path = input[2];
           flag = 0;
         }
+        else if (input[1] == "-w")
+        {
+          flag = 2;
+          path = input[2];
+        }
         else
         {
           bg = max(0, si - stoi(input[1]));
         }
       }
-      if (flag)
+      if (flag == 1)
       {
         for (int i = bg; i < si; i++)
         {
           stout += to_string(i + 1) + " " + store_history[i] + "\n";
         }
         stout.pop_back();
+      }
+      else if (flag == 2)
+      {
+        std::ofstream file(path);
+        string content = "";
+        for(auto itr : store_history){
+          content += itr + '\n';
+        }
+        content.pop_back();
+        file << content;
+        file.close();
       }
       else
       {
